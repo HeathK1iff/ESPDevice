@@ -7,8 +7,6 @@
 #include <IPAddress.h>
 #include <WiFiUDP.h>
 #include <ESP8266WebServer.h>
-#include <PubSubClient.h>
-
 
 #define LENGTH_MQTT_USER 25
 #define LENGTH_MQTT_PASS 25
@@ -78,6 +76,7 @@ private:
   WiFiEventHandler stationAPConnectedHandler;
   WiFiEventHandler stationAPDisconnectedHandler;
   
+  void publishDeviceInfo();
   void initMqttTopicCache();
 protected:
   IMqttClient *mqttClient;
@@ -89,17 +88,20 @@ public:
 
   //MQTT Settings 
   IMqttClient *getMqttClient();
-  void publishDeviceInfo();
   char *makeMqttTopic(char *topic);
+  
   char *getMQTTBrokerIp();
   void setMQTTBrokerIp(const char *mqttBrokerIp);
   void setMQTTBrokerIp(char *mqttBrokerIp);
+  
   char *getMQTTUser();
   void setMQTTUser(char* mqttUser);
   void setMQTTUser(const char* mqttUser);
+  
   char *getMQTTPassw();
   void setMQTTPassw(char* mqttPass);
   void setMQTTPassw(const char* mqttPass);
+  
   char * getMQTTPrefix();
   void setMQTTPrefix(char *mqttPrefix);
   void setMQTTPrefix(const char *mqttPrefix);
@@ -108,9 +110,11 @@ public:
   char *getSSID();
   void setSSID(char *ssid);
   void setSSID(const char *ssid);
+  
   char *getSSIDPass();
   void setSSIDPass(char *pass);
   void setSSIDPass(const char *pass);
+  
   bool connectTo(const char *ssid, const char *psw);
   bool tryConnectTo(const char *ssid, const char *psw);
 
